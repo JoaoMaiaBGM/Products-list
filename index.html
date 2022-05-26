@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/css/reset.css">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <title>Testes lista de Produtos</title>
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header>
+        <h1 class="logo">John's Market</h1>
+        <div id="filters" class="filtersContainer">
+            
+            <button class="estiloGeralBotoes estiloGeralBotoes--mostrarTodos" id="mostrarTodos">Todos</button>
+            <button class="estiloGeralBotoes estiloGeralBotoes--filtrarHortifruti" id="hortifruti">Hortifruti</button>
+            <button class="estiloGeralBotoes estiloGeralBotoes--filtrarLaticinio" id="laticínio">Laticínio</button>
+            <button class="estiloGeralBotoes estiloGeralBotoes--filtrarPanificadora" id="panificadora">Panificadora</button>
+
+            <div class="containerBuscaPorNome">
+                
+                <input type="text" placeholder="Nome do produto" class="campoBuscaPorNome">
+                <button class="estiloGeralBotoes estiloGeralBotoes--botaoBuscaPorNome" id="btnBuscar">Buscar</button>
+
+            </div>
+        </div>
+    </header>
+    
+    <main>
+
+        <div class="containerPrecoTotal" id="containerPrecoTotal">
+            <p id="containerPrecoTotal__price">Valor total dos produtos da sessão selecionada
+                <span id="totalSum">R$00</span>
+            </p>
+        </div>
+
+        <div class="containerListaProdutos" id="listaProdutos">
+            <ul class="cardList" id="cardList">
+          
+            </ul>
+        </div>
+
+    </main>
+
+    <script src="src/js/dataProdutos.js"></script>
+    <script src="src/js/script.js"></script>
+</body>
+</html>
