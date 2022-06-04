@@ -1,40 +1,52 @@
 function createCard(productItem) {
 
-  const cardList = document.querySelector('.cardList');
-  const cardItem = document.createElement('li');
+  const cardList          = document.querySelector('.cardList');
+
+  const cardItem          = document.createElement('li');
   cardItem.classList.add('card');
-  const cardImage = document.createElement('img');
-  const cardTitle = document.createElement('h3');
-  const CardPrice = document.createElement('p');
-  const cardSecao = document.createElement('span');
+
+  const cardImage         = document.createElement('img');
+  const cardTitle         = document.createElement('h3');
+  const cardSecao         = document.createElement('span');
+  const cardPrice         = document.createElement('p');
+  cardPrice.classList.add('card__price');
+
+  const cardButton        = document.createElement('button');
+  cardButton.classList.add('card__button');
+  cardButton.addEventListener('click', (event) => {
+    createCheckoutCard(productItem);
+    addTotalAndCount(event);
+  }); 
+
+  const cardNutrients     = document.createElement('div');
+  cardNutrients.classList.add('card__nutrients');
+    const nutrientsList   = document.createElement('p');
+    nutrientsList.classList.add('cardNutrients__list');
   
-  cardImage.src = productItem.img;
-  cardTitle.innerText = productItem.nome;
-  CardPrice.innerText = productItem.preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-  cardSecao.innerText = productItem.secao;
+  cardImage.src           = productItem.img;
+  cardTitle.innerText     = productItem.nome;
+  cardPrice.innerText     = `R$${productItem.preco},00`;
+  cardSecao.innerText     = productItem.secao;
+  cardButton.innerText    = 'Adicionar ao carrinho';
+  cardButton.id           = productItem.id;
+  nutrientsList.innerText = `Nutrientes: ${productItem.componentes}.`;
   
-  cardItem.append(cardImage, cardTitle, cardSecao, CardPrice);
+  cardItem.append(cardImage, cardTitle, cardSecao, cardPrice, cardButton, cardNutrients);
+  cardNutrients.append(nutrientsList);
   cardList.append(cardItem);
 
 }
 
 function createCardAssembleData(productsData) {
   
-  document.getElementById('cardList').innerHTML = ''
-
-  const tagSpan = document.getElementById('totalSum');
-
-  let productSum = 0;
+  document.getElementById('cardList').innerHTML = '';
 
   for(let count = 0; count < productsData.length; count++) {
     const productItem = productsData[count];
-    productSum += productsData[count].preco;
     
     createCard(productItem);
       
   }
-
-    tagSpan.innerText = productSum.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
 
 }
 createCardAssembleData(produtos);
@@ -109,18 +121,126 @@ function filterByName() {
  
     let value = '';
 
-    value = inputSearchBytName.value;
+    value = inputSearchBytName.value.trim();
 
     let filtro = [];
-    let newStr = '';
+    let strNome = '';
+    let strSecao = '';
+    let strCategoria = '';
 
-    for(let i = 0; i < produtos.length; i++){
-      newStr = produtos[i].nome.toLowerCase();
-      if(newStr.includes(value)){
+    for(let i = 0; i < produtos.length; i++) {
+
+      strNome       = produtos[i].nome;
+      strSecao      = produtos[i].secao;
+      strCategoria  = produtos[i].categoria;
+
+      if (strNome.includes(value) || strSecao.includes(value) || strCategoria.includes(value)) {
+
         filtro.push(produtos[i]);
+
       }
     }
 
     createCardAssembleData(filtro);
+
+}
+
+
+function createCheckoutCard (event) {
+
+  const containerCheckout = document.querySelector('.container__checkout');  
+
+    const checkoutCard              = document.createElement('li') ;
+      const checkoutCardImg         = document.createElement('img');
+      checkoutCardImg.className     = 'checkout__img';
+
+      const checkoutCardBody = document.createElement('div');
+      checkoutCardBody.className    = 'checkout__body';
+        const checkoutCardTitle     = document.createElement('h4');
+        const checkoutCardSpan      = document.createElement('span');
+        const checkoutCardPrice     = document.createElement('p');
+        checkoutCardPrice.className = 'checkout__price';
+
+        const checkoutCardButton    = document.createElement('button');
+        checkoutCardButton.addEventListener('click', (event) => {
+          removeCheckoutCard(event);
+          reduceTotalAndCount(event);
+        });
+
+      checkoutCardImg.src           = event.img;
+      checkoutCardTitle.innerText   = event.nome;
+      checkoutCardPrice.innerText   = `R$${event.preco},00`;
+      checkoutCardSpan.innerText    = event.secao;
+      checkoutCardButton.innerText  = 'Remover produto'
+
+      checkoutCardButton.id         = event.id
+
+  checkoutCard.append(checkoutCardImg);
+  checkoutCardBody.append(checkoutCardTitle, checkoutCardSpan, checkoutCardPrice, checkoutCardButton);
+  checkoutCard.append(checkoutCardBody);
+  containerCheckout.append(checkoutCard);
+
+}
+
+function removeCheckoutCard(event) {
+
+  const target = event.target;
+
+  const checkoutCard = target.parentElement.parentElement;
+
+  checkoutCard.remove()
+
+}
+
+
+let count = 0;
+let total = 0;
+
+function addTotalAndCount(event) {
+
+  const spanTotal = document.getElementById('total');
+  const spanCount = document.getElementById('count');
+
+  const target = event.target
+  const checkoutTotal = target
+
+  for(let index = 0; index < produtos.length; index++) {
+
+    if (checkoutTotal.id == produtos[index].id) {
+
+      count++
+      total += produtos[index].preco;
+
+    }
+    
+  }
+
+  spanTotal.innerText = `R$${total},00`;
+  spanCount.innerText = count;
+
+}
+
+
+function reduceTotalAndCount(event) {
+
+  const spanTotal = document.getElementById('total');
+  const spanCount = document.getElementById('count');
+
+  const target = event.target
+  const checkoutTotal = target
+
+  for(let index = 0; index < produtos.length; index++) {
+
+    if (checkoutTotal.id == produtos[index].id) {
+
+      count -= 1;
+      total -= produtos[index].preco;
+
+    }
+    
+  }
+
+  spanTotal.innerText = `R$${total},00`;
+  spanCount.innerText = count;
 
 }

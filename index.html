@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./src/css/reset.css">
     <link rel="stylesheet" href="./src/css/style.css">
-    <title>Testes lista de Produtos</title>
+    <title>S2-06 lista de Produtos</title>
 </head>
 <body>
 
@@ -20,28 +20,40 @@
             <button class="estiloGeralBotoes estiloGeralBotoes--filtrarLaticinio" id="laticínio">Laticínio</button>
             <button class="estiloGeralBotoes estiloGeralBotoes--filtrarPanificadora" id="panificadora">Panificadora</button>
 
-            <div class="containerBuscaPorNome">
-                
-                <input type="text" placeholder="Nome do produto" class="campoBuscaPorNome">
-                <button class="estiloGeralBotoes estiloGeralBotoes--botaoBuscaPorNome" id="btnBuscar">Buscar</button>
-
-            </div>
         </div>
+
+        <div class="containerBuscaPorNome">
+                
+            <input type="text" placeholder="Nome do produto" class="campoBuscaPorNome">
+            <button class="estiloGeralBotoes estiloGeralBotoes--botaoBuscaPorNome" id="btnBuscar">Buscar</button>
+
+        </div>
+
     </header>
     
     <main>
 
-        <div class="containerPrecoTotal" id="containerPrecoTotal">
-            <p id="containerPrecoTotal__price">Valor total dos produtos da sessão selecionada
-                <span id="totalSum">R$00</span>
-            </p>
-        </div>
-
-        <div class="containerListaProdutos" id="listaProdutos">
+        <section class="containerListaProdutos" id="listaProdutos">
             <ul class="cardList" id="cardList">
           
             </ul>
-        </div>
+        </section>
+
+        <aside class="container__cart">
+            <h2><img src="./src/img/carrinho.png" alt="">Carrinho</h2>
+            <section class="container__checkout" id="checkout">
+            
+            </section>
+    
+            <div class="container__summary">
+                <p>Total:
+                    <span id="total">R$00,00</span>
+                </p>
+                <p>Quantidade:
+                    <span id="count">0</span>
+                </p>
+            </div>
+        </aside>
 
     </main>
 
